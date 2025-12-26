@@ -7,7 +7,8 @@ import com.mojang.serialization.Codec;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.HolderSet;
 
 import javax.annotation.concurrent.Immutable;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class BuildingBlocks implements Supplier<Collection<Block>>, Predicate<Bl
 		final ImmutableList.Builder<ResourceLocation> blockMapBuilder = ImmutableList.builder();
 		for(ResourcePair entry : list) {
 			if(entry.flag()) {
-				tagMapBuilder.add(ForgeRegistries.BLOCKS.tags().createTagKey(entry.resource()));
+					tagMapBuilder.add(TagKey.create(BuiltInRegistries.BLOCK.key(), entry.resource()));
 			} else {
 				blockMapBuilder.add(entry.resource());
 			}
@@ -57,13 +58,13 @@ public class BuildingBlocks implements Supplier<Collection<Block>>, Predicate<Bl
 		if(this.cachedBlocks.isEmpty() && !(this.tagList.isEmpty() && this.blockList.isEmpty())) {
 			// add blocks by ID
 			for(ResourceLocation id : blockList) {
-				if(ForgeRegistries.BLOCKS.containsKey(id)) {
-					this.cachedBlocks.add(ForgeRegistries.BLOCKS.getValue(id));
+				if(BuiltInRegistries.BLOCK.containsKey(id)) {
+					this.cachedBlocks.add(BuiltInRegistries.BLOCK.get(id));
 				}
 			}
 			// add blocks by tag
 			for(TagKey<Block> tagKey : tagList) {
-				for(Block block : ForgeRegistries.BLOCKS.tags().getTag(tagKey)) {
+				for(Block block : BuiltInRegistries.BLOCK.getTag(tagKey).map(net.minecraft.core.HolderSet::stream).orElse(java.util.stream.Stream.empty()).map(net.minecraft.core.Holder::value).toList()) {
 					this.cachedBlocks.add(block);
 				}
 			}
