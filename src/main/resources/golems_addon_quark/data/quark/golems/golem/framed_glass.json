@@ -13,7 +13,7 @@
   "repair_items": {
     "#quark:framed_glass": 0.5,
 	"#quark:framed_glass_panes": 0.15,
-    "#c:glass": 0.35,
+    "#c:glass_blocks": 0.35,
 	"#c:glass_panes": 0.1,
 	"#c:ingots/iron": 0.05
   },

@@ -1,9 +1,9 @@
 {
   "parent": "golems:glass",
   "blocks": {
-	"arms": "#c:glass",
-	"legs": "#c:glass",
-	"body": "#c:glass/orange"
+	"arms": "#c:glass_blocks",
+	"legs": "#c:glass_blocks",
+	"body": "#c:glass_blocks/orange"
   },
   "model": "golems:orange_stained_glass"
 }
