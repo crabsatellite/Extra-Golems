@@ -1,13 +1,13 @@
 {
-  "type": "crafting_shapeless",
-  "ingredients": [
-	{ "item": "minecraft:book" },
-	[
-	  { "item": "minecraft:pumpkin" },
-	  { "item": "minecraft:carved_pumpkin" }
-	]
-  ],
-  "result": {
-	"item": "golems:guide_book"
-  }
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+		{ "item": "minecraft:book" },
+		[
+			{ "item": "minecraft:pumpkin" },
+			{ "item": "minecraft:carved_pumpkin" }
+		]
+	],
+	"result": {
+		"id": "golems:guide_book"
+	}
 }
