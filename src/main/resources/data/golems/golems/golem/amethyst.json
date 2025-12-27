@@ -9,11 +9,11 @@
   },
   "hidden": false,
   "blocks": {
-	"all": "#forge:storage_blocks/amethyst"
+	"all": "#c:storage_blocks/amethyst"
   },
   "repair_items": {
-	"#forge:storage_blocks/amethyst": 0.5,
-	"#forge:gems/amethyst": 0.15
+	"#c:storage_blocks/amethyst": 0.5,
+	"#c:gems/amethyst": 0.15
   },
   "model": "golems:amethyst",
   "brain": {
