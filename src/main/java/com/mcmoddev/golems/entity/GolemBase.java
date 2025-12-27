@@ -84,8 +84,11 @@ import java.util.function.Predicate;
 public class GolemBase extends IronGolem implements IExtraGolem {
 
 	// SYNCED ENTITY DATA //
-	private static final EntityDataAccessor<Optional<ResourceLocation>> GOLEM = SynchedEntityData
-			.defineId(GolemBase.class, IExtraGolem.OPTIONAL_RESOURCE_LOCATION);
+	// Use String instead of Optional<ResourceLocation> to avoid custom serializer
+	// registration issues
+	// Empty string means no golem ID is set
+	private static final EntityDataAccessor<String> GOLEM = SynchedEntityData.defineId(GolemBase.class,
+			EntityDataSerializers.STRING);
 	private static final EntityDataAccessor<Boolean> CHILD = SynchedEntityData.defineId(GolemBase.class,
 			EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(GolemBase.class,
@@ -181,7 +184,11 @@ public class GolemBase extends IronGolem implements IExtraGolem {
 	 **/
 	@Override
 	public Optional<ResourceLocation> getGolemId() {
-		return this.getEntityData().get(GOLEM);
+		String idStr = this.getEntityData().get(GOLEM);
+		if (idStr == null || idStr.isEmpty()) {
+			return Optional.empty();
+		}
+		return Optional.of(ResourceLocation.parse(idStr));
 	}
 
 	@Override
@@ -208,8 +215,8 @@ public class GolemBase extends IronGolem implements IExtraGolem {
 		if (level().isClientSide()) {
 			return;
 		}
-		// update ID
-		this.getEntityData().set(GOLEM, Optional.ofNullable(id));
+		// update ID (store as string, empty string for null)
+		this.getEntityData().set(GOLEM, id != null ? id.toString() : "");
 		if (null == id) {
 			return;
 		}
@@ -331,7 +338,7 @@ public class GolemBase extends IronGolem implements IExtraGolem {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(GOLEM, Optional.empty());
+		builder.define(GOLEM, "");
 		builder.define(CHILD, Boolean.FALSE);
 		builder.define(VARIANT, (byte) 0);
 		builder.define(FUEL, 0);

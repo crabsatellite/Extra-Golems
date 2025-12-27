@@ -22,11 +22,6 @@ import java.util.Optional;
 public interface IExtraGolem extends IVariantProvider, ILightProvider, IPowerProvider,
 		IInventoryProvider, ContainerListener, RangedAttackMob {
 
-	// EntityDataSerializer for Optional<ResourceLocation> using StreamCodec
-	public static final EntityDataSerializer<Optional<ResourceLocation>> OPTIONAL_RESOURCE_LOCATION = EntityDataSerializer
-			.forValueType(
-					ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC));
-
 	//// ENTITY ////
 
 	/**
